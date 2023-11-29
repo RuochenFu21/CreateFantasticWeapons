@@ -1,0 +1,7 @@
+// 1.20.1	2023-11-29T16:47:31.682998	Registrate Provider for createfantasticweapons [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+06490d957f8f5e36f12e39e9a0373375eecc6868 assets/createfantasticweapons/lang/en_ud.json
+6c1e13715a1b897e66cba89f95d42dced6aab23d assets/createfantasticweapons/lang/en_us.json
+99e7de08ca47f4c5aeae6ffa2fe5d597283c3301 assets/createfantasticweapons/models/item/andesite_bat.json
+fd3aa4bb6ffd696c084dafc1148719b57f64f01f assets/createfantasticweapons/models/item/brass_bat.json
+0628406f405b808f71f405d24bf0f2c80eca6621 assets/createfantasticweapons/models/item/copper_bat.json
+6f39e064b0bd86ec5857582c3cbc55cf1e6d4318 assets/createfantasticweapons/models/item/metal_bat.json

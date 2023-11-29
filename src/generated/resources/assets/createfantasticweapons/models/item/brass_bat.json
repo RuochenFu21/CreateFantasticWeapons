@@ -1,0 +1,6 @@
+{
+  "parent": "createfantasticweapons:item/bat",
+  "textures": {
+    "1": "createfantasticweapons:item/brass_bat"
+  }
+}
