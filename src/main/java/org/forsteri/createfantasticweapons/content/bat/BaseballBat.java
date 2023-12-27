@@ -2,7 +2,7 @@ package org.forsteri.createfantasticweapons.content.bat;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.client.model.HumanoidModel;
+import com.simibubi.create.content.equipment.potatoCannon.PotatoProjectileEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -15,22 +15,18 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
-import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.entity.projectile.Snowball;
+import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
-public class BaseballBat extends Item implements IClientItemExtensions {
+public class BaseballBat extends Item {
     protected BatTiers batTier;
 
     protected Multimap<Attribute, AttributeModifier> defaultModifiers;
@@ -110,29 +106,25 @@ public class BaseballBat extends Item implements IClientItemExtensions {
 
     public static final int TIC_TAKE_TO_THROW = 5;
 
-    @Override
-    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-        consumer.accept(new IClientItemExtensions() {
-            @Override
-            public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-                if (itemStack.isEmpty())
-                    return HumanoidModel.ArmPose.EMPTY;
-
-                if (entityLiving.getUsedItemHand() != hand)
-                    return HumanoidModel.ArmPose.EMPTY;
-
-                return HumanoidModel.ArmPose.create("EXAMPLE", false, (model, entity, arm) -> {
-                    if (entity.getUseItemRemainingTicks() <= 0)
-                        return;
-//                            if (arm == HumanoidArm.RIGHT)
-//                                return;
-                    model.leftArm.xRot = - (float) Math.PI * (entity.getTicksUsingItem() / (float) TIC_TAKE_TO_THROW) / 2;
-                });
-            }
-        });
-
-        super.initializeClient(consumer);
-    }
+//    @Override
+//    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+//        consumer.accept(new IClientItemExtensions() {
+//            @Override
+//            public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
+//                if (itemStack.isEmpty())
+//                    return HumanoidModel.ArmPose.ITEM;
+//
+//                if (entityLiving.getUsedItemHand() != hand)
+//                    return HumanoidModel.ArmPose.ITEM;
+//
+//                return HumanoidModel.ArmPose.create("MOD", false, (model, entity, arm) -> {
+//                    model.leftArm.xRot = - (float) Math.PI * (entity.getTicksUsingItem() / (float) TIC_TAKE_TO_THROW) / 2;
+//                });
+//            }
+//        });
+//
+//        super.initializeClient(consumer);
+//    }
 
     @FunctionalInterface
     public interface ProjectileSupplier {
@@ -145,6 +137,15 @@ public class BaseballBat extends Item implements IClientItemExtensions {
     static {
         PROJECTILE_ITEMS.put(Items.SNOWBALL, (level, entity, stack) -> new Snowball(level, entity));
         HITTABLE_PROJECTILES.add(Snowball.class);
+        PROJECTILE_ITEMS.put(Items.FIRE_CHARGE, (level, entity, stack) -> new LargeFireball(level, entity, 0, 0, 0, 1));
+        HITTABLE_PROJECTILES.add(LargeFireball.class);
+        HITTABLE_PROJECTILES.add(DragonFireball.class);
+        HITTABLE_PROJECTILES.add(SmallFireball.class);
+        HITTABLE_PROJECTILES.add(WitherSkull.class);
+        HITTABLE_PROJECTILES.add(PotatoProjectileEntity.class);
+        HITTABLE_PROJECTILES.add(ShulkerBullet.class);
+        PROJECTILE_ITEMS.put(Items.ENDER_PEARL, (level, entity, stack) -> new ThrownEnderpearl(level, entity));
+        HITTABLE_PROJECTILES.add(ThrownEnderpearl.class);
     }
 
     @Override
@@ -153,7 +154,6 @@ public class BaseballBat extends Item implements IClientItemExtensions {
         List<Entity> entities = level.getEntities((Entity) null, entity.getBoundingBox().inflate(3, 3, 3), entity1 -> entity1 instanceof Projectile && HITTABLE_PROJECTILES.contains(entity1.getClass()));
         entities.forEach(entity1 -> {
             if (entity1 instanceof Projectile projectile) {
-//                projectile.setPos(entity.getX(), entity.getY(), entity.getZ());
 
                 Vec3 vec3 = entity.getLookAngle();
                 projectile.setDeltaMovement(vec3);
@@ -163,9 +163,26 @@ public class BaseballBat extends Item implements IClientItemExtensions {
                     hurtingProjectile.zPower = vec3.z * 0.1D;
                 }
                 projectile.setOwner(entity);
+                stack.hurtAndBreak(1, entity, (cast) -> cast.broadcastBreakEvent(EquipmentSlot.MAINHAND));
             }
         });
 
-        return super.onEntitySwing(stack, entity);
+        return false;
+    }
+
+    @Override
+    public boolean hurtEnemy(ItemStack stack, @NotNull LivingEntity entity, @NotNull LivingEntity damagedEntity) {
+        stack.hurtAndBreak(1, entity, (cast) -> cast.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+        return true;
+    }
+
+    @Override
+    public boolean isValidRepairItem(@NotNull ItemStack p_41402_, ItemStack p_41403_) {
+        return this.batTier.repair.get().equals(p_41403_.getItem());
+    }
+
+    @Override
+    public int getMaxDamage(ItemStack stack) {
+        return batTier.durability;
     }
 }
