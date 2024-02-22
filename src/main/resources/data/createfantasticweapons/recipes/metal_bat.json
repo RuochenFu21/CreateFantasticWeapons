@@ -1,15 +1,14 @@
 {
-  "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "create:sturdy_sheet"
-  },
-  "base": {
-    "item": "createfantasticweapons:brass_bat"
-  },
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "create:sturdy_sheet"
+    },
+    {
+      "item": "createfantasticweapons:brass_bat"
+    }
+  ],
   "result": {
     "item": "createfantasticweapons:metal_bat"
-  },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
   }
 }

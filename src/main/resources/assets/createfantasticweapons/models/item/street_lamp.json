@@ -1,0 +1,138 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [32, 32],
+	"textures": {
+		"0": "createfantasticweapons:item/street_lamp",
+		"particle": "createfantasticweapons:item/street_lamp"
+	},
+	"elements": [
+		{
+			"name": "Part 1",
+			"from": [7, -15, 7],
+			"to": [9, 17, 9],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 16], "texture": "#0"},
+				"east": {"uv": [1, 0, 2, 16], "texture": "#0"},
+				"south": {"uv": [2, 0, 3, 16], "texture": "#0"},
+				"west": {"uv": [3, 0, 4, 16], "texture": "#0"},
+				"up": {"uv": [12, 8, 11, 7], "texture": "#0"},
+				"down": {"uv": [12, 8, 11, 9], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Part 2",
+			"from": [7, 17, 3],
+			"to": [9, 18, 9],
+			"faces": {
+				"north": {"uv": [12, 1, 13, 1.5], "texture": "#0"},
+				"east": {"uv": [11, 0, 14, 0.5], "texture": "#0"},
+				"south": {"uv": [12, 1.5, 13, 2], "texture": "#0"},
+				"west": {"uv": [11, 0.5, 14, 1], "texture": "#0"},
+				"up": {"uv": [7, 13.5, 6, 10.5], "texture": "#0"},
+				"down": {"uv": [8, 10.5, 7, 13.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Part 3",
+			"from": [7, 18, 3],
+			"to": [9, 25, 4],
+			"faces": {
+				"north": {"uv": [4, 10.5, 5, 14], "texture": "#0"},
+				"east": {"uv": [10, 10.5, 10.5, 14], "texture": "#0"},
+				"south": {"uv": [5, 10.5, 6, 14], "texture": "#0"},
+				"west": {"uv": [10.5, 10.5, 11, 14], "texture": "#0"},
+				"up": {"uv": [13, 2.5, 12, 2], "texture": "#0"},
+				"down": {"uv": [13, 2.5, 12, 3], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Part 4",
+			"from": [7, 25, 3],
+			"to": [9, 26, 7],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 20.5, 8.5]},
+			"faces": {
+				"north": {"uv": [12, 3, 13, 3.5], "texture": "#0"},
+				"east": {"uv": [11, 9, 13, 9.5], "texture": "#0"},
+				"south": {"uv": [12, 3.5, 13, 4], "texture": "#0"},
+				"west": {"uv": [11, 9.5, 13, 10], "texture": "#0"},
+				"up": {"uv": [9, 12.5, 8, 10.5], "texture": "#0"},
+				"down": {"uv": [10, 10.5, 9, 12.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Part 5",
+			"from": [7, 25, 7],
+			"to": [9, 28, 9],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 20.5, 8.5]},
+			"faces": {
+				"north": {"uv": [11, 1, 12, 2.5], "texture": "#0"},
+				"east": {"uv": [11, 2.5, 12, 4], "texture": "#0"},
+				"south": {"uv": [11, 4, 12, 5.5], "texture": "#0"},
+				"west": {"uv": [11, 5.5, 12, 7], "texture": "#0"},
+				"up": {"uv": [12, 11, 11, 10], "texture": "#0"},
+				"down": {"uv": [12, 11, 11, 12], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6.5, -16, 6.5],
+			"to": [9.5, -14, 9.5],
+			"faces": {
+				"north": {"uv": [11, 9, 12.5, 10], "texture": "#0"},
+				"east": {"uv": [11, 9, 12.5, 10], "texture": "#0"},
+				"south": {"uv": [11, 9, 12.5, 10], "texture": "#0"},
+				"west": {"uv": [11, 9, 12.5, 10], "texture": "#0"},
+				"up": {"uv": [8.5, 10.5, 10, 12], "texture": "#0"},
+				"down": {"uv": [8.5, 10.5, 10, 12], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 180, 0],
+			"translation": [0, 4.25, 1.25],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 180, 0],
+			"translation": [0, 4.25, 1.25],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"firstperson_righthand": {
+			"rotation": [-6, -180, 0],
+			"translation": [1.25, 1.75, -0.25],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-6, -180, 0],
+			"translation": [1.25, 1.75, -0.25],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"ground": {
+			"rotation": [0, 180, 58],
+			"translation": [0, 1.5, 0]
+		},
+		"gui": {
+			"rotation": [61, -123, 57],
+			"translation": [0, 0.75, -1.25],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"head": {
+			"rotation": [-90, 180, -180],
+			"translation": [0, -0.25, -24],
+			"scale": [1.75, 1.75, 1.75]
+		},
+		"fixed": {
+			"rotation": [0, 180, 57],
+			"translation": [0.75, 1.25, -1.25],
+			"scale": [0.5, 0.5, 0.5]
+		}
+	},
+	"groups": [
+		{
+			"name": "Lamp",
+			"origin": [0, 0, 0],
+			"color": 0,
+			"children": [0, 1, 2, 3, 4, 5]
+		}
+	]
+}

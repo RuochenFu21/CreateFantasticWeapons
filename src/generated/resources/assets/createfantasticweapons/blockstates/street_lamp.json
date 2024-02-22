@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "is_ghost=false": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=true": {
+      "model": "createfantasticweapons:block/street_lamp"
+    }
+  }
+}

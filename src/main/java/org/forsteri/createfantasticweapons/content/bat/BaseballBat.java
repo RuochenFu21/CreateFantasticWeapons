@@ -3,6 +3,7 @@ package org.forsteri.createfantasticweapons.content.bat;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.simibubi.create.content.equipment.potatoCannon.PotatoProjectileEntity;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -19,12 +20,14 @@ import net.minecraft.world.entity.projectile.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class BaseballBat extends Item {
     protected BatTiers batTier;
@@ -55,29 +58,68 @@ public class BaseballBat extends Item {
         ItemStack projectile = p_40673_.getItemInHand(InteractionHand.OFF_HAND);
         ItemStack stack = p_40673_.getItemInHand(p_40674_);
 
-        if (!PROJECTILE_ITEMS.containsKey(projectile.getItem()))
-            return InteractionResultHolder.pass(stack);
+        if (PROJECTILE_ITEMS.containsKey(projectile.getItem()) ||
+            projectile.isEmpty()
+        ) {
+            p_40673_.startUsingItem(p_40674_);
+            return InteractionResultHolder.consume(stack);
+        }
 
-        p_40673_.startUsingItem(p_40674_);
-        return InteractionResultHolder.consume(stack);
+        return InteractionResultHolder.pass(stack);
     }
 
     public int getUseDuration(@NotNull ItemStack p_40680_) {
-        return TIC_TAKE_TO_THROW;
+        return Integer.MAX_VALUE;
     }
 
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack p_40678_) {
         return UseAnim.NONE;
     }
 
-    public @NotNull ItemStack finishUsingItem(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entity) {
-        if (!(entity instanceof Player player)) return stack;
+    @Override
+    public void onUseTick(@NotNull Level level, @NotNull LivingEntity entity, @NotNull ItemStack stack, int tickHeld) {
+        if (!(entity instanceof Player player)) return;
 
         ItemStack itemstack = player.getItemInHand(InteractionHand.OFF_HAND);
 
-        if (!PROJECTILE_ITEMS.containsKey(itemstack.getItem())) return stack;
+        if (PROJECTILE_ITEMS.containsKey(itemstack.getItem())
+                && tickHeld >= TIC_TAKE_TO_THROW) {
+            throwProjectile(stack, level, player);
+            entity.stopUsingItem();
+            return;
+        }
 
-        if (itemstack.isEmpty()) return stack;
+
+        super.onUseTick(level, entity, stack, tickHeld);
+    }
+
+    @Override
+    public void releaseUsing(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entityHitting, int tickHeld) {
+        if (!(entityHitting instanceof Player player)) return;
+
+        if (!player.getItemInHand(InteractionHand.OFF_HAND).isEmpty())
+            return;
+
+        level.getEntities((Entity) null, player.getBoundingBox().inflate(2), entity -> entity instanceof LivingEntity).forEach(
+                entity -> {
+                    LivingEntity living = (LivingEntity) entity;
+                    living.hurt(level.damageSources().playerAttack(player),
+                            (float) Math.max(0.5, (2f - 15f / tickHeld) * batTier.getDamage())
+                    );
+                }
+        );
+
+        entityHitting.swing(InteractionHand.MAIN_HAND);
+
+        super.releaseUsing(stack, level, entityHitting, tickHeld);
+    }
+
+    protected void throwProjectile(@NotNull ItemStack stack, @NotNull Level level, @NotNull Player player) {
+        ItemStack itemstack = player.getItemInHand(InteractionHand.OFF_HAND);
+
+        if (!PROJECTILE_ITEMS.containsKey(itemstack.getItem())) return;
+
+        if (itemstack.isEmpty()) return;
 
         boolean flag1 = (itemstack.getItem() instanceof ArrowItem && ((ArrowItem)itemstack.getItem()).isInfinite(itemstack, stack, player));
 
@@ -101,30 +143,42 @@ public class BaseballBat extends Item {
         if (!player.getOffhandItem().is(Items.AIR))
             player.getCooldowns().addCooldown(player.getOffhandItem().getItem(), 20);
 
-        return stack;
     }
 
     public static final int TIC_TAKE_TO_THROW = 5;
 
-//    @Override
-//    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-//        consumer.accept(new IClientItemExtensions() {
-//            @Override
-//            public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
-//                if (itemStack.isEmpty())
-//                    return HumanoidModel.ArmPose.ITEM;
-//
-//                if (entityLiving.getUsedItemHand() != hand)
-//                    return HumanoidModel.ArmPose.ITEM;
-//
-//                return HumanoidModel.ArmPose.create("MOD", false, (model, entity, arm) -> {
-//                    model.leftArm.xRot = - (float) Math.PI * (entity.getTicksUsingItem() / (float) TIC_TAKE_TO_THROW) / 2;
-//                });
-//            }
-//        });
-//
-//        super.initializeClient(consumer);
-//    }
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            @Override
+            public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
+                if (itemStack.isEmpty())
+                    return HumanoidModel.ArmPose.ITEM;
+
+                if (entityLiving.getUsedItemHand() != hand)
+                    return HumanoidModel.ArmPose.ITEM;
+
+                return HumanoidModel.ArmPose.create("MOD", false, (model, entity, arm) -> {
+                    if (!entityLiving.getItemInHand(InteractionHand.OFF_HAND).isEmpty())
+                        return;
+
+//                    if (entity.swinging) {
+//                        model.rightArm.yRot = (float) (Math.PI - (Math.PI * Math.pow(2, -(6 - entity.swingTime) / 6f))) / 2;
+//                        model.rightArm.zRot = (float) (Math.PI - (Math.PI * Math.pow(2, -(6 - entity.swingTime) / 6f) / 4 * 3)) / 2;
+//                        model.rightArm.xRot = 0;
+//                    }
+
+                    if (!entity.isUsingItem())
+                        return;
+
+                    model.rightArm.yRot = (float) (Math.PI - (Math.PI * Math.pow(2, -entity.getTicksUsingItem() / 15f))) / 2;
+                    model.rightArm.zRot = (float) (Math.PI - (Math.PI * Math.pow(2, -entity.getTicksUsingItem() / 15f) / 4 * 3)) / 2;
+                });
+            }
+        });
+
+        super.initializeClient(consumer);
+    }
 
     @FunctionalInterface
     public interface ProjectileSupplier {
@@ -151,7 +205,7 @@ public class BaseballBat extends Item {
     @Override
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         Level level = entity.level();
-        List<Entity> entities = level.getEntities((Entity) null, entity.getBoundingBox().inflate(3, 3, 3), entity1 -> entity1 instanceof Projectile && HITTABLE_PROJECTILES.contains(entity1.getClass()));
+        List<Entity> entities = level.getEntities((Entity) null, entity.getBoundingBox().inflate(3), entity1 -> entity1 instanceof Projectile && HITTABLE_PROJECTILES.contains(entity1.getClass()));
         entities.forEach(entity1 -> {
             if (entity1 instanceof Projectile projectile) {
 
