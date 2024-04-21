@@ -5,10 +5,16 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -18,6 +24,7 @@ import org.forsteri.createfantasticweapons.content.bat.BatTiers;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampBlock;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampBlockEntity;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampItem;
+import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampRenderer;
 
 public class Registrate {
     private static final DeferredRegister<CreativeModeTab> REGISTER
@@ -64,11 +71,15 @@ public class Registrate {
                                 .modelFile(p.models().getExistingFile(p.modLoc("block/street_lamp")))
                                 .build();
                     }))
+            .defaultLoot()
+            .loot((b, p) -> b.add(Registrate.LAMP.get(), LootTable.lootTable().withPool(b.applyExplosionCondition(p, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F)).add(LootItem.lootTableItem(p)))
+                    .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(p).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(StreetLampBlock.IS_GHOST, false))))))
             .register();
 
     public static BlockEntityEntry<StreetLampBlockEntity> LAMP_BE = CreateFantasticWeapons.REGISTRATE
             .blockEntity("street_lamp", StreetLampBlockEntity::new)
             .validBlock(LAMP)
+            .renderer(() -> StreetLampRenderer::new)
             .register();
 
 

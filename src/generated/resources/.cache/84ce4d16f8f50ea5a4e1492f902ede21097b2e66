@@ -1,4 +1,4 @@
-// 1.20.1	2024-02-22T18:41:03.78674	Registrate Provider for createfantasticweapons [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-03-09T16:51:50.986014	Registrate Provider for createfantasticweapons [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 82b05fb4c2a1771ccb7c58b0e00a1852546329d8 assets/createfantasticweapons/blockstates/street_lamp.json
 6c40b8b348d65900b3f537fae5c6b93ed4154f8b assets/createfantasticweapons/lang/en_ud.json
 764df0c16c62cb742cf677236493660e6f61a0f2 assets/createfantasticweapons/lang/en_us.json
@@ -6,4 +6,4 @@
 fd3aa4bb6ffd696c084dafc1148719b57f64f01f assets/createfantasticweapons/models/item/brass_bat.json
 0628406f405b808f71f405d24bf0f2c80eca6621 assets/createfantasticweapons/models/item/copper_bat.json
 6f39e064b0bd86ec5857582c3cbc55cf1e6d4318 assets/createfantasticweapons/models/item/metal_bat.json
-c308d15395461156d3f693cd204a7c0e62d6b5dc data/createfantasticweapons/loot_tables/blocks/street_lamp.json
+e593aa74cf5440e81b5e17c55b1b457ee0da6f99 data/createfantasticweapons/loot_tables/blocks/street_lamp.json

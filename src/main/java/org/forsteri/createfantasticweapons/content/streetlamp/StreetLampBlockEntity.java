@@ -25,9 +25,7 @@ public class StreetLampBlockEntity extends SmartBlockEntity{
         } else {
             for (BlockPos pos : new BlockPos[] {getBlockPos().above(), getBlockPos().below()}) {
                 if (!isGhost(pos)) {
-                    System.out.println("Ah");
-//                    level.setBlockAndUpdate(getBlockPos(), Blocks.AIR.defaultBlockState());
-                    level.destroyBlock(getBlockPos(), false);
+                    level.destroyBlock(getBlockPos(), true);
                     break;
                 }
             }

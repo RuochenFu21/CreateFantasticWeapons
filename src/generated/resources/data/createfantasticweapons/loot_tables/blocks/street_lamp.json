@@ -6,6 +6,13 @@
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
+        },
+        {
+          "block": "createfantasticweapons:street_lamp",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "is_ghost": "false"
+          }
         }
       ],
       "entries": [

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": {
+      "item": "create:iron_sheet"
+    },
+    "A": {
+      "item": "create:andesite_alloy"
+    }
+  },
+  "pattern": [
+    "I",
+    "A",
+    "A"
+  ],
+  "result": {
+    "item": "createfantasticweapons:street_lamp"
+  },
+  "show_notification": true
+}
