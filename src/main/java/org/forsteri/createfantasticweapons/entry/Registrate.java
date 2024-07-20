@@ -21,6 +21,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import org.forsteri.createfantasticweapons.CreateFantasticWeapons;
 import org.forsteri.createfantasticweapons.content.bat.BaseballBat;
 import org.forsteri.createfantasticweapons.content.bat.BatTiers;
+import org.forsteri.createfantasticweapons.content.bigsyringe.BigSyringe;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampBlock;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampBlockEntity;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampItem;
@@ -52,6 +53,12 @@ public class Registrate {
 
         CreateFantasticWeapons.REGISTRATE.addRawLang("itemGroup.fantastic_weapons", "Create: Fantastic Weapons");
     }
+
+    public static  ItemEntry<BigSyringe> BIG_SYRINGE = CreateFantasticWeapons.REGISTRATE
+            .item("big_syringe", BigSyringe::new)
+            .properties(p -> p.stacksTo(1))
+            .model((ctx, p) -> p.withExistingParent(ctx.getName(), p.modLoc("item/big_syringe")))
+            .register();
 
     public static BlockEntry<StreetLampBlock> LAMP = CreateFantasticWeapons.REGISTRATE
             .block("street_lamp", StreetLampBlock::new)
