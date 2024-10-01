@@ -52,12 +52,12 @@ public class BigSyringe extends Item implements Vanishable {
         return !p_43294_.isCreative();
     }
 
-    public boolean hurtEnemy(ItemStack p_43278_, LivingEntity p_43279_, LivingEntity p_43280_) {
+    public boolean hurtEnemy(ItemStack p_43278_, @NotNull LivingEntity p_43279_, @NotNull LivingEntity p_43280_) {
         p_43278_.hurtAndBreak(1, p_43280_, (p_43296_) -> p_43296_.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         return true;
     }
 
-    public boolean mineBlock(ItemStack p_43282_, Level p_43283_, BlockState p_43284_, BlockPos p_43285_, LivingEntity p_43286_) {
+    public boolean mineBlock(@NotNull ItemStack p_43282_, @NotNull Level p_43283_, BlockState p_43284_, @NotNull BlockPos p_43285_, @NotNull LivingEntity p_43286_) {
         if (p_43284_.getDestroySpeed(p_43283_, p_43285_) != 0.0F) {
             p_43282_.hurtAndBreak(2, p_43286_, (p_43276_) -> p_43276_.broadcastBreakEvent(EquipmentSlot.MAINHAND));
         }
@@ -65,7 +65,7 @@ public class BigSyringe extends Item implements Vanishable {
         return true;
     }
 
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot p_43274_) {
+    public @NotNull Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(@NotNull EquipmentSlot p_43274_) {
         return p_43274_ == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(p_43274_);
     }
 
@@ -120,7 +120,7 @@ public class BigSyringe extends Item implements Vanishable {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
         BlockPos pos = context.getClickedPos();
         ItemStack itemStack = context.getItemInHand();
@@ -146,8 +146,10 @@ public class BigSyringe extends Item implements Vanishable {
 
             int drainAmount = fluidOf.map(stack -> 4000 - stack.getAmount()).orElse(4000);
             CompoundTag itemTag = itemStack.getOrCreateTag();
+            FluidStack draining = fluidStack.copy();
+            draining.setAmount(drainAmount);
 
-            FluidStack drained = handler.drain(drainAmount, IFluidHandler.FluidAction.EXECUTE);
+            FluidStack drained = handler.drain(draining, IFluidHandler.FluidAction.EXECUTE);
 
             if (drained.isEmpty())
                 continue;
