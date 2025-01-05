@@ -3,6 +3,7 @@ package org.forsteri.createfantasticweapons;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.forsteri.createfantasticweapons.content.bigsyringe.BigSyringe;
 import org.forsteri.createfantasticweapons.entry.Registrate;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -50,6 +52,15 @@ public class CreateFantasticWeapons {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
+    }
+
+    @SubscribeEvent
+    public void criticalHitEvent(CriticalHitEvent event) {
+        if (!event.isVanillaCritical())
+            return;
+        if (!event.getEntity().isHolding(Registrate.BIG_SYRINGE.asItem()))
+            return;
+        BigSyringe.criticalHit(event);
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

@@ -4,15 +4,19 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllFluids;
+import com.simibubi.create.content.fluids.potion.PotionFluid;
+import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.LangBuilder;
+import com.simibubi.create.foundation.utility.NBTHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -23,11 +27,13 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import org.jetbrains.annotations.NotNull;
@@ -160,5 +166,85 @@ public class BigSyringe extends Item implements Vanishable {
         }
 
         return InteractionResult.PASS;
+    }
+    
+    public static void criticalHit(CriticalHitEvent event) {
+        ItemStack mainhandItem = event.getEntity().getMainHandItem();
+        CompoundTag tag = mainhandItem.getOrCreateTag();
+        if (fluidOf(mainhandItem).isEmpty())
+            return;
+        FluidStack current = fluidOf(mainhandItem).get();
+        current.setAmount(tag.getInt("amount"));
+
+        if (!(current.getFluid() instanceof PotionFluid))
+            return;
+
+        if (!(event.getTarget() instanceof LivingEntity livingTarget))
+            return;
+
+        if (!livingTarget.isAffectedByPotions())
+            return;
+
+        PotionFluid.BottleType bottleType = NBTHelper.readEnum(tag, "Bottle", PotionFluid.BottleType.class);
+
+        int drainedAmount = bottleType == PotionFluid.BottleType.REGULAR ? 250 : 150;
+
+        if (current.getAmount() < drainedAmount)
+            return;
+
+        ItemStack bottlified = PotionFluidHandler.fillBottle(null, current);
+
+        if (!event.getEntity().level().isClientSide()) {
+            for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(bottlified)) {
+                if (mobeffectinstance.getEffect().isInstantenous()) {
+                    mobeffectinstance.getEffect().applyInstantenousEffect(event.getEntity(), event.getEntity(), livingTarget, mobeffectinstance.getAmplifier(), 1.0D);
+                } else {
+                    livingTarget.addEffect(new MobEffectInstance(mobeffectinstance));
+                }
+            }
+        }
+
+        current.setAmount(current.getAmount() - drainedAmount);
+
+        tag.put("potion", current.getOrCreateTag());
+        tag.putInt("amount", current.getAmount());
+    }
+
+    public static void sweep(Player player) {
+        ItemStack mainhandItem = player.getMainHandItem();
+        CompoundTag tag = mainhandItem.getOrCreateTag();
+        if (fluidOf(mainhandItem).isEmpty())
+            return;
+        FluidStack current = fluidOf(mainhandItem).get();
+        current.setAmount(tag.getInt("amount"));
+
+        if (!(current.getFluid() instanceof PotionFluid))
+            return;
+
+        int drainedAmount = 10;
+
+        if (current.getAmount() < drainedAmount)
+            return;
+
+        current.setAmount(current.getAmount() - drainedAmount);
+
+        tag.put("potion", current.getOrCreateTag());
+        tag.putInt("amount", current.getAmount());
+    }
+
+    public static void sweepATarget(Player player, LivingEntity target) {
+        ItemStack mainhandItem = player.getMainHandItem();
+        FluidStack current = fluidOf(mainhandItem).get();
+        ItemStack bottlified = PotionFluidHandler.fillBottle(null, current);
+
+        if (!player.level().isClientSide()) {
+            for(MobEffectInstance mobeffectinstance : PotionUtils.getMobEffects(bottlified)) {
+                if (mobeffectinstance.getEffect().isInstantenous()) {
+                    mobeffectinstance.getEffect().applyInstantenousEffect(player, player, target, mobeffectinstance.getAmplifier(), 1.0D);
+                } else {
+                    target.addEffect(new MobEffectInstance(mobeffectinstance));
+                }
+            }
+        }
     }
 }
