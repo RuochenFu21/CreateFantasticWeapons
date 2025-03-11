@@ -1,8 +1,14 @@
 {
   "block.createfantasticweapons.street_lamp": "Street Lamp",
   "item.createfantasticweapons.andesite_bat": "Andesite Bat",
+  "item.createfantasticweapons.big_syringe": "Big Syringe",
+  "item.createfantasticweapons.boxers_glove": "Boxers Glove",
   "item.createfantasticweapons.brass_bat": "Brass Bat",
   "item.createfantasticweapons.copper_bat": "Copper Bat",
   "item.createfantasticweapons.metal_bat": "Metal Bat",
+  "item.createfantasticweapons.netherite_propeller_leggings": "Netherite Propeller Leggings",
+  "item.createfantasticweapons.propeller_leggings": "Propeller Leggings",
+  "item.createfantasticweapons.slime_boxers_glove": "Slime Boxers Glove",
+  "item.createfantasticweapons.super_fishing_rod": "Super Fishing Rod",
   "itemGroup.fantastic_weapons": "Create: Fantastic Weapons"
 }

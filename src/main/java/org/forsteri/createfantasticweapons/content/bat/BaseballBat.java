@@ -73,7 +73,7 @@ public class BaseballBat extends Item {
     }
 
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack p_40678_) {
-        return UseAnim.NONE;
+        return UseAnim.CUSTOM;
     }
 
     @Override
@@ -103,13 +103,15 @@ public class BaseballBat extends Item {
         level.getEntities((Entity) null, player.getBoundingBox().inflate(2), entity -> entity instanceof LivingEntity).forEach(
                 entity -> {
                     LivingEntity living = (LivingEntity) entity;
+                    if (living == player) return;
+                    if (living.isAlliedTo(player)) return;
                     living.hurt(level.damageSources().playerAttack(player),
                             (float) Math.max(0.5, (2f - 15f / tickHeld) * batTier.getDamage())
                     );
                 }
         );
 
-        entityHitting.swing(InteractionHand.MAIN_HAND);
+//        entityHitting.swing(InteractionHand.MAIN_HAND);
 
         super.releaseUsing(stack, level, entityHitting, tickHeld);
     }
@@ -150,6 +152,17 @@ public class BaseballBat extends Item {
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
+            private static final HumanoidModel.ArmPose POSE = HumanoidModel.ArmPose.create("BASEBALL_BAT", false, (model, entity, arm) -> {
+                if (!entity.getItemInHand(InteractionHand.OFF_HAND).isEmpty())
+                    return;
+
+                if (!entity.isUsingItem())
+                    return;
+
+                model.rightArm.yRot = (float) (Math.PI - (Math.PI * Math.pow(2, -entity.getTicksUsingItem() / 15f))) / 2;
+                model.rightArm.zRot = (float) (Math.PI - (Math.PI * Math.pow(2, -entity.getTicksUsingItem() / 15f) / 4 * 3)) / 2;
+            });
+
             @Override
             public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
                 if (itemStack.isEmpty())
@@ -158,22 +171,7 @@ public class BaseballBat extends Item {
                 if (entityLiving.getUsedItemHand() != hand)
                     return HumanoidModel.ArmPose.ITEM;
 
-                return HumanoidModel.ArmPose.create("MOD", false, (model, entity, arm) -> {
-                    if (!entityLiving.getItemInHand(InteractionHand.OFF_HAND).isEmpty())
-                        return;
-
-//                    if (entity.swinging) {
-//                        model.rightArm.yRot = (float) (Math.PI - (Math.PI * Math.pow(2, -(6 - entity.swingTime) / 6f))) / 2;
-//                        model.rightArm.zRot = (float) (Math.PI - (Math.PI * Math.pow(2, -(6 - entity.swingTime) / 6f) / 4 * 3)) / 2;
-//                        model.rightArm.xRot = 0;
-//                    }
-
-                    if (!entity.isUsingItem())
-                        return;
-
-                    model.rightArm.yRot = (float) (Math.PI - (Math.PI * Math.pow(2, -entity.getTicksUsingItem() / 15f))) / 2;
-                    model.rightArm.zRot = (float) (Math.PI - (Math.PI * Math.pow(2, -entity.getTicksUsingItem() / 15f) / 4 * 3)) / 2;
-                });
+                return POSE;
             }
         });
 

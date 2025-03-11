@@ -2,11 +2,10 @@ package org.forsteri.createfantasticweapons.content.streetlamp;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import com.simibubi.create.CreateClient;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
-import com.simibubi.create.foundation.utility.Components;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.Pair;
+import net.createmod.catnip.data.Pair;
+import net.createmod.catnip.outliner.Outliner;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
@@ -33,6 +32,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.fml.DistExecutor;
+import org.forsteri.createfantasticweapons.CreateFantasticWeapons;
 import org.forsteri.createfantasticweapons.entry.Registrate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -101,9 +101,9 @@ public class StreetLampItem extends BlockItem {
     public void showBounds(BlockPlaceContext context, BlockPos pos) {
         if (!(context.getPlayer() instanceof LocalPlayer localPlayer))
             return;
-        CreateClient.OUTLINER.showAABB(Pair.of("street_lamp", pos), new AABB(pos).inflate(0, 1, 0))
+        Outliner.getInstance().showAABB(Pair.of("street_lamp", pos), new AABB(pos).inflate(0, 1, 0))
                 .colored(0xFF_ff5d6c);
-        Lang.translate("large_water_wheel.not_enough_space")
+        Create.lang().translate("large_water_wheel.not_enough_space")
                 .color(0xFF_ff5d6c)
                 .sendStatus(localPlayer);
     }
@@ -125,7 +125,7 @@ public class StreetLampItem extends BlockItem {
         super.appendHoverText(item, p_40573_, tooltip, p_40575_);
 
         tooltip.add(
-                Components.translatable(blockOf(item).item.get().getDescriptionId()).withStyle(ChatFormatting.GRAY)
+                Component.translatable(blockOf(item).item.get().getDescriptionId()).withStyle(ChatFormatting.GRAY)
         );
     }
 

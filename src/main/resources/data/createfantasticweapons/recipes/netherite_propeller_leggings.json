@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "minecraft:netherite_leggings"
+    },
+    "F": {
+      "item": "create:encased_fan"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "A": {
+      "item": "create:andesite_alloy"
+    }
+  },
+  "pattern": [
+    " C ",
+    "FRF",
+    " A "
+  ],
+  "result": {
+    "item": "createfantasticweapons:netherite_propeller_leggings"
+  },
+  "show_notification": true
+}

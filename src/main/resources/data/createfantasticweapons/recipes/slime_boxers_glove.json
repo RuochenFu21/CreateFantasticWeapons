@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "createfantasticweapons:boxers_glove"
+    }
+  ],
+  "result": {
+    "item": "createfantasticweapons:slime_boxers_glove"
+  }
+}

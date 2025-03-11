@@ -1,7 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"3": "createfantasticweapons:item/big_syringe"
+		"3": "createfantasticweapons:item/big_syringe",
+		"particle": "minecraft:glass"
 	},
 	"elements": [
 		{

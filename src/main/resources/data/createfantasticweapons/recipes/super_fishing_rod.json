@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "R": {
+      "item": "minecraft:fishing_rod"
+    },
+    "P": {
+      "item": "create:rope_pulley"
+    },
+    "C": {
+      "item": "create:hand_crank"
+    },
+    "H": {
+      "item": "create:brass_hand"
+    }
+  },
+  "pattern": [
+    "  P",
+    " RH",
+    "C  "
+  ],
+  "result": {
+    "item": "createfantasticweapons:super_fishing_rod"
+  },
+  "show_notification": true
+}

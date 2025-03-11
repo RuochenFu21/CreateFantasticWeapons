@@ -1,6 +1,11 @@
 package org.forsteri.createfantasticweapons.entry;
 
 import com.simibubi.create.AllCreativeModeTabs;
+import com.simibubi.create.AllTags;
+import com.simibubi.create.Create;
+import com.simibubi.create.content.equipment.armor.BacktankItem;
+import com.simibubi.create.content.equipment.clipboard.ClipboardBlockItem;
+import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -8,6 +13,8 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -22,10 +29,16 @@ import org.forsteri.createfantasticweapons.CreateFantasticWeapons;
 import org.forsteri.createfantasticweapons.content.bat.BaseballBat;
 import org.forsteri.createfantasticweapons.content.bat.BatTiers;
 import org.forsteri.createfantasticweapons.content.bigsyringe.BigSyringe;
+import org.forsteri.createfantasticweapons.content.boxersgloves.BoxersGloves;
+import org.forsteri.createfantasticweapons.content.propellerleggings.PropellerLeggings;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampBlock;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampBlockEntity;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampItem;
 import org.forsteri.createfantasticweapons.content.streetlamp.StreetLampRenderer;
+import org.forsteri.createfantasticweapons.content.superfishingrod.SuperFishingRod;
+
+import static com.simibubi.create.AllTags.forgeItemTag;
+import static com.simibubi.create.Create.REGISTRATE;
 
 public class Registrate {
     private static final DeferredRegister<CreativeModeTab> REGISTER
@@ -56,8 +69,27 @@ public class Registrate {
 
     public static  ItemEntry<BigSyringe> BIG_SYRINGE = CreateFantasticWeapons.REGISTRATE
             .item("big_syringe", BigSyringe::new)
-            .properties(p -> p.stacksTo(1))
-            .model((ctx, p) -> p.withExistingParent(ctx.getName(), p.modLoc("item/big_syringe")))
+            .properties(p -> p.stacksTo(1).defaultDurability(250))
+            .model((ctx, p) -> p.getExistingFile(p.modLoc("item/big_syringe")))
+            .register();
+
+    public static  ItemEntry<BoxersGloves> BOXERS_GLOVE = CreateFantasticWeapons.REGISTRATE
+            .item("boxers_glove", (prop) -> new BoxersGloves(prop, false))
+            .properties(p -> p.stacksTo(1).defaultDurability(600))
+            .model((ctx, p) -> p.getExistingFile(p.modLoc("item/boxers_glove")))
+            .register();
+
+    public static  ItemEntry<BoxersGloves> SLIME_BOXERS_GLOVE = CreateFantasticWeapons.REGISTRATE
+            .item("slime_boxers_glove", (prop) -> new BoxersGloves(prop, true))
+            .properties(p -> p.stacksTo(1).defaultDurability(600))
+            .model((ctx, p) -> p.getExistingFile(p.modLoc("item/slime_boxers_glove")))
+            .register();
+
+    public static  ItemEntry<SuperFishingRod> SUPER_FISHING_ROD = CreateFantasticWeapons.REGISTRATE
+            .item("super_fishing_rod", SuperFishingRod::new)
+            .properties(p -> p.stacksTo(1).defaultDurability(300))
+            .model((ctx, p) -> p.getExistingFile(p.modLoc("item/super_fishing_rod")))
+            .onRegister(SuperFishingRod::registerModelOverrides)
             .register();
 
     public static BlockEntry<StreetLampBlock> LAMP = CreateFantasticWeapons.REGISTRATE
@@ -89,6 +121,18 @@ public class Registrate {
             .renderer(() -> StreetLampRenderer::new)
             .register();
 
+    public static ItemEntry<PropellerLeggings> PROPELLER_LEGGINGS = CreateFantasticWeapons.REGISTRATE
+            .item("propeller_leggings",
+                    p -> new PropellerLeggings(ArmorMaterials.IRON, p, new ResourceLocation(CreateFantasticWeapons.MOD_ID, "propeller_leggings")))
+            .tag(forgeItemTag("armors/leggings"))
+            .register();
+
+    public static ItemEntry<PropellerLeggings> NETHERITE_PROPELLER_LEGGINGS = CreateFantasticWeapons.REGISTRATE
+            .item("netherite_propeller_leggings",
+                    p -> new PropellerLeggings(ArmorMaterials.IRON, p, new ResourceLocation(CreateFantasticWeapons.MOD_ID, "netherite_propeller_leggings")))
+            .tag(forgeItemTag("armors/leggings"))
+            .register();
+
 
     public static void register(IEventBus modEventBus) {
         REGISTER.register(modEventBus);
@@ -99,7 +143,8 @@ public class Registrate {
                 .item(tier.name().toLowerCase() + "_bat", p -> new BaseballBat(tier, p))
                 .properties(p -> p.stacksTo(1).defaultDurability(tier.durability))
                 .model((ctx, p) -> p.withExistingParent(ctx.getName(), p.modLoc("item/bat"))
-                        .texture("1", p.modLoc("item/" + tier.name().toLowerCase() + "_bat")))
+                        .texture("1", p.modLoc("item/" + tier.name().toLowerCase() + "_bat"))
+                        .texture("particle", p.modLoc("item/" + tier.name().toLowerCase() + "_bat")))
                 .register();
     }
 }

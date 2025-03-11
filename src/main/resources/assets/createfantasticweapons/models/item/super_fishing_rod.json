@@ -1,0 +1,15 @@
+{
+    "parent": "item/handheld_rod",
+    "textures": {
+        "layer0": "createfantasticweapons:item/super_fishing_rod",
+        "particle": "createfantasticweapons:item/super_fishing_rod"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "cast": 1
+            },
+            "model": "createfantasticweapons:item/super_fishing_rod_cast"
+        }
+    ]
+}

@@ -1,8 +1,10 @@
 package org.forsteri.createfantasticweapons;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -14,6 +16,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.forsteri.createfantasticweapons.content.bigsyringe.BigSyringe;
+import org.forsteri.createfantasticweapons.content.propellerleggings.PropellerLeggings;
 import org.forsteri.createfantasticweapons.entry.Registrate;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -61,6 +64,13 @@ public class CreateFantasticWeapons {
         if (!event.getEntity().isHolding(Registrate.BIG_SYRINGE.asItem()))
             return;
         BigSyringe.criticalHit(event);
+    }
+
+    @SubscribeEvent
+    public void livingJumpEvent(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntity().getItemBySlot(EquipmentSlot.FEET).getItem() instanceof PropellerLeggings)
+            return;
+        PropellerLeggings.onJumpEvent(event);
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent

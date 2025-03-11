@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "createfantasticweapons:item/netherite_propeller_leggings"
+  }
+}

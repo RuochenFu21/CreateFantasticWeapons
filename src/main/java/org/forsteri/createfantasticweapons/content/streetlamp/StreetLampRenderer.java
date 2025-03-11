@@ -1,8 +1,8 @@
 package org.forsteri.createfantasticweapons.content.streetlamp;
 
-import com.jozufozu.flywheel.core.model.ModelUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.blockEntity.renderer.SmartBlockEntityRenderer;
+import dev.engine_room.flywheel.lib.model.ModelUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -11,6 +11,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RedstoneLampBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelData;
 import org.forsteri.createfantasticweapons.entry.Registrate;
 
 public class StreetLampRenderer extends SmartBlockEntityRenderer<StreetLampBlockEntity> {
@@ -48,6 +49,6 @@ public class StreetLampRenderer extends SmartBlockEntityRenderer<StreetLampBlock
 
         Minecraft mc = Minecraft.getInstance();
         mc.getBlockRenderer()
-                .renderSingleBlock(blockState, ms, buffer, light, overlay, ModelUtil.VIRTUAL_DATA, RenderType.cutoutMipped());
+                .renderSingleBlock(blockState, ms, buffer, light, overlay, ModelData.EMPTY, RenderType.cutoutMipped());
     }
 }

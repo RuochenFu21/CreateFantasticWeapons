@@ -8,9 +8,9 @@ import com.simibubi.create.content.fluids.potion.PotionFluid;
 import com.simibubi.create.content.fluids.potion.PotionFluidHandler;
 import com.simibubi.create.content.processing.basin.BasinBlockEntity;
 import com.simibubi.create.foundation.blockEntity.behaviour.fluid.SmartFluidTankBehaviour;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.LangBuilder;
-import com.simibubi.create.foundation.utility.NBTHelper;
+import com.simibubi.create.foundation.utility.CreateLang;
+import net.createmod.catnip.lang.LangBuilder;
+import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -113,12 +113,12 @@ public class BigSyringe extends Item implements Vanishable {
         Optional<FluidStack> fluid = fluidOf(item);
         if (fluid.isEmpty()) return;
 
-        LangBuilder mb = Lang.translate("generic.unit.millibuckets");
+        LangBuilder mb = CreateLang.translate("generic.unit.millibuckets");
         tooltip.add(
-                Lang.fluidName(fluid.get())
-                        .add(Lang.text(" "))
+                CreateLang.fluidName(fluid.get())
+                        .add(CreateLang.text(" "))
                         .style(ChatFormatting.GRAY)
-                        .add(Lang.number(fluid.get().getAmount())
+                        .add(CreateLang.number(fluid.get().getAmount())
                                 .add(mb)
                                 .style(ChatFormatting.BLUE))
                         .component()

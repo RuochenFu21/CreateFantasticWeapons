@@ -1,10 +1,10 @@
 package org.forsteri.createfantasticweapons.content.streetlamp;
 
-import com.jozufozu.flywheel.core.model.ModelUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;
 import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
+import net.createmod.ponder.render.VirtualRenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -35,6 +35,6 @@ public class StreetLampItemRenderer extends CustomRenderedItemModelRenderer {
 
         Minecraft mc = Minecraft.getInstance();
         mc.getBlockRenderer()
-                .renderSingleBlock(blockState, ms, buffer, light, overlay, ModelUtil.VIRTUAL_DATA, RenderType.cutoutMipped());
+                .renderSingleBlock(blockState, ms, buffer, light, overlay, VirtualRenderHelper.VIRTUAL_DATA, RenderType.cutoutMipped());
     }
 }

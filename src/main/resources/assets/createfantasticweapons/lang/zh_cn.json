@@ -1,0 +1,14 @@
+{
+  "block.createfantasticweapons.street_lamp": "路灯杆",
+  "item.createfantasticweapons.andesite_bat": "安山合金球棒",
+  "item.createfantasticweapons.big_syringe": "大针筒",
+  "item.createfantasticweapons.boxers_glove": "拳击手套",
+  "item.createfantasticweapons.brass_bat": "黄铜金球棒",
+  "item.createfantasticweapons.copper_bat": "铜合金球棒",
+  "item.createfantasticweapons.metal_bat": "金属球棒",
+  "item.createfantasticweapons.netherite_propeller_leggings": "下界合金推进护腿",
+  "item.createfantasticweapons.propeller_leggings": "推进护腿",
+  "item.createfantasticweapons.slime_boxers_glove": "弹性拳击手套",
+  "item.createfantasticweapons.super_fishing_rod": "强力钓鱼竿",
+  "itemGroup.fantastic_weapons": "机械动力：神奇武器"
+}

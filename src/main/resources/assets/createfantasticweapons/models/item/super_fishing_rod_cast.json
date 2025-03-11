@@ -1,0 +1,7 @@
+{
+    "parent": "item/fishing_rod",
+    "textures": {
+        "layer0": "createfantasticweapons:item/super_fishing_rod_cast",
+        "particle": "createfantasticweapons:item/super_fishing_rod_cast"
+    }
+}

@@ -1,9 +1,12 @@
-// 1.20.1	2024-03-09T16:51:50.986014	Registrate Provider for createfantasticweapons [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
-82b05fb4c2a1771ccb7c58b0e00a1852546329d8 assets/createfantasticweapons/blockstates/street_lamp.json
-6c40b8b348d65900b3f537fae5c6b93ed4154f8b assets/createfantasticweapons/lang/en_ud.json
-764df0c16c62cb742cf677236493660e6f61a0f2 assets/createfantasticweapons/lang/en_us.json
-99e7de08ca47f4c5aeae6ffa2fe5d597283c3301 assets/createfantasticweapons/models/item/andesite_bat.json
-fd3aa4bb6ffd696c084dafc1148719b57f64f01f assets/createfantasticweapons/models/item/brass_bat.json
-0628406f405b808f71f405d24bf0f2c80eca6621 assets/createfantasticweapons/models/item/copper_bat.json
-6f39e064b0bd86ec5857582c3cbc55cf1e6d4318 assets/createfantasticweapons/models/item/metal_bat.json
+// 1.20.1	2025-01-10T15:55:47.389028	Registrate Provider for createfantasticweapons [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+122c36604a9bc7c9726a9ab53a306679ae5f40d3 assets/createfantasticweapons/blockstates/street_lamp.json
+6451990570d5a0a6100bc41c7b77e36a545f3165 assets/createfantasticweapons/lang/en_ud.json
+da8fbd3fccadfb9fced83378b9d869b6f2c3f45b assets/createfantasticweapons/lang/en_us.json
+b258484c636449de7bbb802f7759ef28e1334384 assets/createfantasticweapons/models/item/andesite_bat.json
+db940b63e297e98130b71a04adc4c464ccc25a4e assets/createfantasticweapons/models/item/brass_bat.json
+b79364d50d08e9890ddbafac1f0d2a0921005356 assets/createfantasticweapons/models/item/copper_bat.json
+d6274289bc61b3d6deb400ec54a4fd96d1050585 assets/createfantasticweapons/models/item/metal_bat.json
+604fda3132ed399a4d952c1f16fd483ff8c08e3e assets/createfantasticweapons/models/item/netherite_propeller_leggings.json
+536f2f769481a33146656438e53fa74f0dcd7d3b assets/createfantasticweapons/models/item/propeller_leggings.json
 e593aa74cf5440e81b5e17c55b1b457ee0da6f99 data/createfantasticweapons/loot_tables/blocks/street_lamp.json
+824f1fa200b24ed2708df1b8c5f36200b3469450 data/forge/tags/items/armors/leggings.json

@@ -1,9 +1,87 @@
 {
   "variants": {
-    "is_ghost=false": {
+    "is_ghost=false,lamp_type=beacon": {
       "model": "createfantasticweapons:item/street_lamp"
     },
-    "is_ghost=true": {
+    "is_ghost=false,lamp_type=blaze_burner": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=campfire": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=end_rod": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=glowstone": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=jack_o_lantern": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=lantern": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=nixie_tube": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=none": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=redstone_lamp": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=rose_quartz_lamp": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=sea_lantern": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=shroomlight": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=false,lamp_type=soul_lantern": {
+      "model": "createfantasticweapons:item/street_lamp"
+    },
+    "is_ghost=true,lamp_type=beacon": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=blaze_burner": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=campfire": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=end_rod": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=glowstone": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=jack_o_lantern": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=lantern": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=nixie_tube": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=none": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=redstone_lamp": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=rose_quartz_lamp": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=sea_lantern": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=shroomlight": {
+      "model": "createfantasticweapons:block/street_lamp"
+    },
+    "is_ghost=true,lamp_type=soul_lantern": {
       "model": "createfantasticweapons:block/street_lamp"
     }
   }

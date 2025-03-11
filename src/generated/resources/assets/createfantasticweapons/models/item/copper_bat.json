@@ -1,6 +1,7 @@
 {
   "parent": "createfantasticweapons:item/bat",
   "textures": {
-    "1": "createfantasticweapons:item/copper_bat"
+    "1": "createfantasticweapons:item/copper_bat",
+    "particle": "createfantasticweapons:item/copper_bat"
   }
 }

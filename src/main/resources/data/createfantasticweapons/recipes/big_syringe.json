@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": {
+      "item": "create:spout"
+    },
+    "T": {
+      "item": "create:fluid_tank"
+    },
+    "C": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "G": {
+      "item": "create:framed_glass"
+    }
+  },
+  "pattern": [
+    "CTC",
+    "GSG",
+    " C "
+  ],
+  "result": {
+    "item": "createfantasticweapons:big_syringe"
+  },
+  "show_notification": true
+}

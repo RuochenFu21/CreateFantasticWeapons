@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    " L ",
+    "LWL",
+    " LS"
+  ],
+  "result": {
+    "item": "createfantasticweapons:boxers_glove"
+  },
+  "show_notification": true
+}
